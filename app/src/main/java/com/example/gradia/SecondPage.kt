@@ -1,9 +1,11 @@
 package com.example.gradia
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.gradia.databinding.ActivitySecondPageBinding
@@ -22,6 +24,10 @@ class SecondPage : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.statusBarColor = Color.TRANSPARENT
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+
 
         binding = ActivitySecondPageBinding.inflate(layoutInflater)
         setContentView(binding.root)

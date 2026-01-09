@@ -5,6 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootScroll"
     android:layout_width="match_parent"
+    android:paddingTop="?attr/actionBarSize"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="#f9fafb"
