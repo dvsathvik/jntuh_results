@@ -77,7 +77,6 @@
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@id/studentFullName"
                 app:layout_constraintBottom_toBottomOf="@id/imageView" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout2"
                 android:layout_width="0dp"
