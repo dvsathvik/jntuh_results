@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="no_backlog">#16a34a</color>
+    <color name="no_backlog_number">#16a34a</color>
+
+    <color name="backlog">#dc2626</color>
+    <color name="backlog_number">#dc2626</color>
+</resources>
