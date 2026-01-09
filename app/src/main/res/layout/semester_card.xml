@@ -12,6 +12,7 @@
     android:background="@drawable/second_layout_main_white_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootLayout"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="Semester 1"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/txtSgpa"
@@ -35,7 +36,7 @@
             android:layout_height="wrap_content"
             android:text="7.06"
             android:textStyle="bold"
-            android:textSize="34sp"
+            android:textSize="28sp"
             android:textColor="#2563eb"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -59,7 +60,7 @@
             android:layout_height="wrap_content"
             android:text="Credits: 24"
             android:textColor="#6F6E6E"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtSemName"/>

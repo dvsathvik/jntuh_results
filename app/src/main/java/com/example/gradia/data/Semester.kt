@@ -10,8 +10,8 @@ data class Semester(
     @SerializedName("semester")
     val sem: String,
 
-    @SerializedName("subject")
-    val subject: List<Subject>,
+    @SerializedName("subjects")
+    val subject: List<Subject> = emptyList(),
 
     @SerializedName("sgpa")
     val sgpa: Double? = null,
@@ -20,5 +20,5 @@ data class Semester(
     val status: String? = null,
 
     @SerializedName("credits")
-    var credits : Int? = null
+    var credits : Double? = null
 ): Parcelable

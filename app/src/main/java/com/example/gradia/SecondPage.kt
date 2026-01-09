@@ -1,12 +1,14 @@
 package com.example.gradia
 
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.gradia.databinding.ActivitySecondPageBinding
 import com.example.gradia.ui.AllSemestersFragment
+import com.example.gradia.ui.SemesterDetailsFragment
 import com.example.gradia.viewmodel.StudentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -29,9 +31,8 @@ class SecondPage : AppCompatActivity() {
                 binding.studentFullName.text = student?.name
                 binding.studentRollNo.text = student?.rollNo
 
-
-                var s : Double = 0.0
-                var c : Double = 0.0
+                var s: Double = 0.0
+                var c: Double = 0.0
 
                 student?.results.orEmpty().forEach { (_, semester) ->
                     s += semester.sgpa!! * semester.credits!!
@@ -64,13 +65,39 @@ class SecondPage : AppCompatActivity() {
         }
 
         binding.myButtonDetails.setOnClickListener {
-            binding.myButtonAllSemesters.setBackgroundResource(R.drawable.white_button_background)
-            binding.myButtonDetails.setBackgroundResource(R.drawable.blue_button_background)
-            binding.myButtonAllSemesters.setTextColor(ContextCompat.getColor(this, R.color.black))
-            binding.myButtonDetails.setTextColor(ContextCompat.getColor(this, R.color.white))
+            viewModel.selectSemester(viewModel.student.value?.results?.size?.minus(1) ?: 0)
+            loadFragment(SemesterDetailsFragment())
+            myButtonDetails()
         }
 
         loadFragment(AllSemestersFragment())
+
+        onBackPressedDispatcher.addCallback(this) {
+
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.resultFragmentContainer)
+
+            when (currentFragment) {
+
+                is com.example.gradia.ui.SemesterDetailsFragment -> {
+                    loadFragment(com.example.gradia.ui.AllSemestersFragment())
+                    binding.myButtonAllSemesters.performClick()
+                }
+
+                is com.example.gradia.ui.AllSemestersFragment -> {
+                    finish()
+                }
+
+                else -> finish()
+            }
+        }
+
+    }
+
+    fun myButtonDetails() {
+        binding.myButtonAllSemesters.setBackgroundResource(R.drawable.white_button_background)
+        binding.myButtonDetails.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.myButtonDetails.setBackgroundResource(R.drawable.blue_button_background)
+        binding.myButtonAllSemesters.setTextColor(ContextCompat.getColor(this, R.color.black))
     }
 
     private fun loadFragment(f: androidx.fragment.app.Fragment) {

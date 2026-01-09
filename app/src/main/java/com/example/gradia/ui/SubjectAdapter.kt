@@ -2,41 +2,42 @@ package com.example.gradia.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gradia.R
 import com.example.gradia.data.Subject
-import com.example.gradia.databinding.ItemSubjectBinding
+import com.example.gradia.databinding.SubjectCardBinding
 
-class SubjectAdapter :
-    ListAdapter<Subject, SubjectAdapter.SubjectViewHolder>(DiffCallback()) {
+class SubjectAdapter(
+    private val subjects: List<Subject>
+) : RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder>() {
+
+    inner class SubjectViewHolder(val binding: SubjectCardBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
-        val binding = ItemSubjectBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+        val binding = SubjectCardBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
         )
         return SubjectViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
+        val item = subjects[position]
 
-    class SubjectViewHolder(private val binding: ItemSubjectBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        holder.binding.txtCode.text = item.code
+        holder.binding.txtCredit.text = "Credits: ${item.credit.toInt()}"
+        holder.binding.txtSubjectName.text = item.name
 
-        fun bind(subject: Subject) {
-            binding.txtSubjectName.text = subject.name
-            binding.txtCode.text = subject.code
-            binding.txtGp.text = "GP: ${subject.gp}"
-            binding.txtCredit.text = "Credits: ${subject.credit}"
+        if (item.gp!! == 0){
+            holder.binding.rightGradeBox.setBackgroundResource(R.drawable.grade_box_bg_red)
+            holder.binding.txtGp.setTextColor(holder.binding.root.context.getColor(R.color.backlog))
+            holder.binding.txtGpValue.setTextColor(holder.binding.root.context.getColor(R.color.backlog_number))
         }
+
+        holder.binding.txtGp.text = item.grade
+
+        holder.binding.txtGpValue.text = item.gp.toString()
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<Subject>() {
-        override fun areItemsTheSame(old: Subject, new: Subject) = old.code == new.code
-        override fun areContentsTheSame(old: Subject, new: Subject) = old == new
-    }
+    override fun getItemCount() = subjects.size
 }

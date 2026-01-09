@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gradia.R
-import com.example.gradia.data.Semester
+import com.example.gradia.SecondPage
 import com.example.gradia.databinding.FragmentAllSemestersBinding
 import com.example.gradia.viewmodel.StudentViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -39,10 +39,15 @@ class AllSemestersFragment : Fragment() {
             viewModel.student.collectLatest { student ->
                 student?.let { s ->
 
+                    // s.results is a Map<String, Semester>
                     val semList = s.results.values.toList()
 
-                    val adapter = SemAdapter(semList) { semester ->
-                        openSemesterDetails(semester)
+                    val adapter = SemAdapter(semList) { _, position ->
+                        (requireActivity() as SecondPage).myButtonDetails()
+
+                        viewModel.selectSemester(position)
+
+                        openSemesterDetails()
                     }
 
                     binding.recyclerView.adapter = adapter
@@ -51,9 +56,8 @@ class AllSemestersFragment : Fragment() {
         }
     }
 
-    private fun openSemesterDetails(semester: Semester) {
-
-        val fragment = SemesterDetailsFragment.newInstance(semester)
+    private fun openSemesterDetails() {
+        val fragment = SemesterDetailsFragment()
 
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.resultFragmentContainer, fragment)

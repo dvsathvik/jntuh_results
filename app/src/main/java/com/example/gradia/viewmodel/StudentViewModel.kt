@@ -34,6 +34,13 @@ class StudentViewModel @Inject constructor(
     private val _navigateEvent = MutableSharedFlow<Unit>()
     val navigateEvent = _navigateEvent
 
+    private val _selectedSemesterIndex = MutableStateFlow(-1)
+    val selectedSemesterIndex = _selectedSemesterIndex
+
+    fun selectSemester(index: Int) {
+        _selectedSemesterIndex.value = index
+    }
+
     fun fetchStudentByRollNo(rollNo: String) {
         viewModelScope.launch {
             _loading.value = true

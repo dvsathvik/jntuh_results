@@ -4,16 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gradia.R
 import com.example.gradia.data.Semester
 import com.example.gradia.databinding.SemesterCardBinding
 
 class SemAdapter(
     private val semesters: List<Semester>,
-    private val onItemClick: (Semester) -> Unit
+    private val onItemClick: (Semester, Int) -> Unit
 ) : RecyclerView.Adapter<SemAdapter.UserViewHolder>() {
 
-    inner class UserViewHolder(val binding: SemesterCardBinding)
-        : RecyclerView.ViewHolder(binding.root)
+    inner class UserViewHolder(val binding: SemesterCardBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = SemesterCardBinding.inflate(
@@ -26,10 +27,8 @@ class SemAdapter(
         val item = semesters[position]
 
         holder.binding.txtSemName.text = "Semester ${position + 1}"
-
         holder.binding.txtSgpa.text = item.sgpa?.toString() ?: "--"
-
-        holder.binding.txtCredit.text = "Credits: ${item.credits ?: 0}"
+        holder.binding.txtCredit.text = "Credits: ${item.credits?.toInt() ?: 0}"
 
         if (item.status == "PASS") {
             holder.binding.backlogBadge.visibility = View.GONE
@@ -40,8 +39,14 @@ class SemAdapter(
         val progress = ((item.sgpa ?: 0.0) / 10.0 * 100).toInt()
         holder.binding.semProgress.progress = progress
 
-        holder.binding.root.setOnClickListener {
-            onItemClick(item)
+        if (item.status == "FAIL") {
+            holder.binding.rootLayout.setBackgroundResource(R.drawable.second_layout_backlog_card)
+        } else {
+            holder.binding.rootLayout.setBackgroundResource(R.drawable.second_layout_sem_border_card)
+        }
+
+        holder.itemView.setOnClickListener {
+            onItemClick(item, position)
         }
     }
 
