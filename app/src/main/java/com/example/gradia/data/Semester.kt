@@ -7,6 +7,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Semester(
+    @SerializedName("semester")
+    val sem: String,
+
     @SerializedName("subject")
     val subject: List<Subject>,
 
@@ -14,7 +17,8 @@ data class Semester(
     val sgpa: Double? = null,
 
     @SerializedName("status")
-    val status: Boolean? = null,
+    val status: String? = null,
 
+    @SerializedName("credits")
     var credits : Int? = null
 ): Parcelable

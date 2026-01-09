@@ -11,7 +11,7 @@ data class Student(
     @SerializedName("fullName")
     val name: String,
 
-    @SerializedName("currentBacklogs")
+    @SerializedName("backlogs")
     val currentBacklogs: List<String>,
 
     @SerializedName("results")

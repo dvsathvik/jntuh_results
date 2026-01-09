@@ -31,7 +31,7 @@ class SemAdapter(
 
         holder.binding.txtCredit.text = "Credits: ${item.credits ?: 0}"
 
-        if (item.status == true) {
+        if (item.status == "PASS") {
             holder.binding.backlogBadge.visibility = View.GONE
         } else {
             holder.binding.backlogBadge.visibility = View.VISIBLE
